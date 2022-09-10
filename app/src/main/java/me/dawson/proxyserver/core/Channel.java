@@ -113,9 +113,9 @@ public class Channel {
 
 		socketBuffer.flip();
 		int datasize = socketBuffer.limit() - socketBuffer.position();
-		String r = request ? "request" : "response";
-		Log.d(TAG, r + " " + channelName + " read count " + count
-				+ " datasize " + datasize);
+		//String r = request ? "request" : "response";
+		//Log.d(TAG, r + " " + channelName + " read count " + count
+		//		+ " datasize " + datasize);
 		if (count == -1) {
 			if (listener != null) {
 				listener.onClose(this);
@@ -165,7 +165,7 @@ public class Channel {
 	}
 
 	private void setStatusLine(String line) {
-		Log.d(TAG, channelName + " setStatusLine " + line);
+		//Log.d(TAG, channelName + " setStatusLine " + line);
 		statusLine = line;
 		if (request) {
 			sl = new RequestLine(line);
@@ -198,8 +198,8 @@ public class Channel {
 			return;
 		}
 
-		Log.d(TAG, channelName + " addHeader [name] " + name + " [value] "
-				+ value);
+		//Log.d(TAG, channelName + " addHeader [name] " + name + " [value] "
+		//		+ value);
 		headers.put(name, value);
 	}
 
@@ -256,7 +256,7 @@ public class Channel {
 
 	public void close() {
 		try {
-			Log.d(TAG, channelName + " close socket " + (index++));
+			//Log.d(TAG, channelName + " close socket " + (index++));
 			selectionKey.cancel();
 			socket.close();
 		} catch (Exception e) {

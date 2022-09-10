@@ -26,8 +26,6 @@ public class ProxySettings extends Activity implements ServiceConnection,
 	protected static final String KEY_PREFS = "proxy_pref";
 	protected static final String KEY_ENABALE = "proxy_enable";
 
-	private static int NOTIFICATION_ID = 20140701;
-
 	private IProxyControl proxyControl = null;
 
 	private TextView tvInfo;
@@ -48,7 +46,7 @@ public class ProxySettings extends Activity implements ServiceConnection,
 
 	@Override
 	public void onServiceConnected(ComponentName cn, IBinder binder) {
-		proxyControl = (IProxyControl) binder;
+		proxyControl = IProxyControl.Stub.asInterface(binder);
 		if (proxyControl != null) {
 			updateProxy();
 		}
@@ -119,29 +117,6 @@ public class ProxySettings extends Activity implements ServiceConnection,
 			return;
 		}
 
-		NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-		Context context = getApplicationContext();
-
-		Notification notification = new Notification();
-		notification.icon = R.drawable.icon_launcher;
-		notification.tickerText = getResources().getString(R.string.proxy_on);
-		notification.when = System.currentTimeMillis();
-
-		CharSequence contentTitle = getResources().getString(R.string.app_name);
-		;
-		CharSequence contentText = getResources().getString(
-				R.string.service_text);
-		Intent intent = new Intent(this, ProxySettings.class);
-		PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
-				intent, 0);
-
-		notification.setLatestEventInfo(context, contentTitle, contentText,
-				pendingIntent);
-		notification.flags |= Notification.FLAG_ONGOING_EVENT;
-
-		manager.notify(NOTIFICATION_ID, notification);
-
 		Toast.makeText(this, getResources().getString(R.string.proxy_started),
 				Toast.LENGTH_SHORT).show();
 	}
@@ -160,8 +135,7 @@ public class ProxySettings extends Activity implements ServiceConnection,
 		}
 
 		tvInfo.setText(R.string.proxy_off);
-		NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-		manager.cancel(NOTIFICATION_ID);
+
 		Toast.makeText(this, getResources().getString(R.string.proxy_stopped),
 				Toast.LENGTH_SHORT).show();
 	}

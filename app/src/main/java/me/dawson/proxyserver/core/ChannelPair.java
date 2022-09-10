@@ -187,7 +187,7 @@ public class ChannelPair implements ChannelListener {
 	}
 
 	public void close() {
-		Log.d(TAG, "close pair socket " + this);
+		// Log.d(TAG, "close pair socket " + this);
 
 		if (requestChannel != null) {
 			requestChannel.close();
@@ -205,7 +205,7 @@ public class ChannelPair implements ChannelListener {
 
 	@Override
 	public void onHeaders(Channel channel) {
-		Log.d(TAG, "onHeaders");
+		//Log.d(TAG, "onHeaders");
 		if (channel.isRequest()) {
 			if (!connResponse(channel)) {
 				// close pair if can't connect to target
@@ -238,7 +238,7 @@ public class ChannelPair implements ChannelListener {
 
 	@Override
 	public void onClose(Channel channel) {
-		Log.d(TAG, "onClose " + channel);
+		//Log.d(TAG, "onClose " + channel);
 		close();
 	}
 }
